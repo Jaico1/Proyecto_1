@@ -44,6 +44,8 @@ export async function patchProducto(req, res) {
   try{
     const { _id, ...updates } = req.body;
     const resultado = await Producto.findOneAndUpdate({_id, isDeleted : false},updates ,{ new: true, runValidators: true});
+    console.log(updates);
+    
     res.status(200).json(resultado);
   } catch(err){
     res.status(500).json(err);

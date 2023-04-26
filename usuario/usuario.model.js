@@ -8,7 +8,7 @@ const usuarioSchema = mongoose.Schema(
     password: {type: String, required: true},
     cell: {type: Number, required: true},
     direccion: {type: String, required: true},
-    tipo: {type: Number, required: true, enum: [0,1,2]},
+    tipo: {type: String, required: true, enum: ["cliente","administrador","domiciliario"]},
 
     isDeleted: { type: Boolean, default: false },
   },
