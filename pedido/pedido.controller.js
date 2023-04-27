@@ -3,11 +3,13 @@ import Pedido from './pedido.model';
 import Restaurante from '../restaurante/restaurante.model';
 
 export async function getPedido(req,res) {
-  // const { name } = req.query;
-
-  const pedidos = await pedido.find(req.query);
-
-  res.status(200).json(pedidos);
+  try{ 
+    const { _id } = req.query;
+    const pedido = await Pedido.find({_id, isDeleted:false});
+    res.status(200).json(pedido);
+  }catch(err){
+    res.status(500).json(err);
+  }
 }
 
 export async function createPedido(req, res) {

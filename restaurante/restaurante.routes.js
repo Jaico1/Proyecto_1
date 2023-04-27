@@ -1,9 +1,11 @@
-import { createRestaurante, deleteRestaurante, getRestaurante, patchRestaurante } from "./restaurante.controller";
+import { createRestaurante, deleteRestaurante, getRestaurante, getRestauranteCatNom, patchRestaurante } from "./restaurante.controller";
 import {Router} from 'express';
 const router = Router();
 
 // Endpoint GET /prueba
 router.get('/', getRestaurante );
+
+router.get('/2', getRestauranteCatNom );
 
 // Endpoint POST /prueba
 router.post('/', createRestaurante );

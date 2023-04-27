@@ -4,14 +4,16 @@ import Usuario from './usuario.model';
 export async function getUsuario(req,res) {
    const { _id, email, password } = req.query;
    console.log(_id)
+   let usuarios = [];
   try{
     if(_id){
-    const usuarios = await Usuario.findOne({_id, isDeleted:false});
-    res.status(200).json(usuarios);
+     usuarios = await Usuario.findOne({_id, isDeleted:false});
+    //res.status(200).json(usuarios);
   }else if(email&&password){
-    const usuarios = await Usuario.findOne({email, password, isDeleted:false});
-    res.status(200).json(usuarios);
+     usuarios = await Usuario.findOne({email, password, isDeleted:false});
+    //res.status(200).json(usuarios);
   }
+  res.status(200).json(usuarios);
   }catch(err){
     res.status(500).json(err);
   }

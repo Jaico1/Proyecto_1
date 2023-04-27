@@ -14,16 +14,20 @@ export async function getProducto(req,res) {
 
 export async function getProductoRes(req,res) {
   try{const { restaurante,categoria} = req.query;
+
+  let producto = [];
+
   if(restaurante&&categoria){
-    const producto = await Producto.find({restaurante, categoria, isDeleted:false});
-    res.status(200).json(producto);
+     producto = await Producto.find({restaurante, categoria, isDeleted:false});
+    
   }else if(restaurante){
-    const producto = await Producto.find({restaurante, isDeleted:false});
-    res.status(200).json(producto);
+     producto = await Producto.find({restaurante, isDeleted:false});
+    
   }else if(categoria){
-    const producto = await Producto.find({categoria, isDeleted:false});
-    res.status(200).json(producto);
+     producto = await Producto.find({categoria, isDeleted:false});
+    
   }
+  res.status(200).json(producto);
    } catch(err){
    res.status(500).json(err);
    }

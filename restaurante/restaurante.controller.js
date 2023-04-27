@@ -1,5 +1,6 @@
 
 import Restaurante from './restaurante.model';
+const stringSimilarity = require('string-similarity');
 
 export async function getRestaurante(req,res) {
   try{ 
@@ -12,11 +13,36 @@ export async function getRestaurante(req,res) {
 }
 
 export async function getRestauranteCatNom(req,res) {
-  try{ 
-    const { _id } = req.query;
-    const restaurante = await Restaurante.find({_id, isDeleted:false});
-    res.status(200).json(restaurante);
-  }catch(err){
+  const { categoria, name } = req.query;
+
+  try {
+  let filteredRestaurants = [];
+
+    if (categoria && name) {
+      // Find restaurants by category and name query
+       filteredRestaurants = await Restaurante.find({
+        categoria: categoria,
+        $or: [
+          { name: { $regex: name, $options: 'i' } },
+          { name: { $regex: new RegExp(stringSimilarity.findBestMatch(name, await Restaurante.find().distinct('name')).bestMatch.target, 'i') } }
+        ]
+      });
+    } else if (categoria) {
+      // Find restaurants by category only
+       filteredRestaurants = await Restaurante.find({ categoria: categoria });
+    } else if (name) {
+      // Find restaurants by name query
+       filteredRestaurants = await Restaurante.find({
+        $or: [
+          { name: { $regex: name, $options: 'i' } },
+          { name: { $regex: new RegExp(stringSimilarity.findBestMatch(name, await Restaurante.find().distinct('name')).bestMatch.target, 'i') } }
+        ]
+      });
+    } 
+
+    res.status(200).json(filteredRestaurants);
+  } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 }
