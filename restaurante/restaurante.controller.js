@@ -19,25 +19,25 @@ export async function getRestauranteCatNom(req,res) {
   let filteredRestaurants = [];
 
     if (categoria && name) {
-      // Find restaurants by category and name query
+      // Encontrar restaurantes por ambos filtro y nombre 
        filteredRestaurants = await Restaurante.find({
         categoria: categoria,
         $or: [
           { name: { $regex: name, $options: 'i' } },
           { name: { $regex: new RegExp(stringSimilarity.findBestMatch(name, await Restaurante.find().distinct('name')).bestMatch.target, 'i') } }
         ]
-      });
+      }).sort({numPedidos:-1});
     } else if (categoria) {
-      // Find restaurants by category only
-       filteredRestaurants = await Restaurante.find({ categoria: categoria });
+      // Encontrar restaurantes por categoria solamente
+       filteredRestaurants = await Restaurante.find({ categoria: categoria }).sort({numPedidos:-1});
     } else if (name) {
-      // Find restaurants by name query
+      // Encontrar restaurantes solo por nombre 
        filteredRestaurants = await Restaurante.find({
         $or: [
           { name: { $regex: name, $options: 'i' } },
           { name: { $regex: new RegExp(stringSimilarity.findBestMatch(name, await Restaurante.find().distinct('name')).bestMatch.target, 'i') } }
         ]
-      });
+      }).sort({numPedidos:-1});
     } 
 
     res.status(200).json(filteredRestaurants);
@@ -49,8 +49,8 @@ export async function getRestauranteCatNom(req,res) {
 
 export async function createRestaurante(req, res) {
   try {
-    const { name, categoria} = req.body;
-    const restaurante = new Restaurante({ name, categoria});
+    const { name, categoria , direccion} = req.body;
+    const restaurante = new Restaurante({ name, categoria, direccion});
     const resultado = await restaurante.save();
     res.status(200).json(resultado);
   } catch (err) {

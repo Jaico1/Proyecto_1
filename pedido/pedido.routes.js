@@ -1,9 +1,11 @@
-import { createPedido, deletePedido, getPedido, patchPedido } from "./pedido.controller";
+import { createPedido, deletePedido, getPedido, getPedidoUserDate, patchPedido } from "./pedido.controller";
 import {Router} from 'express';
 const router = Router();
 
 // Endpoint GET /prueba
 router.get('/', getPedido );
+
+router.get('/2', getPedidoUserDate );
 
 // Endpoint POST /prueba
 router.post('/', createPedido );

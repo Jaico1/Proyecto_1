@@ -33,6 +33,7 @@ export async function createUsuario(req, res) {
 
 export async function patchUsuario(req, res) {
   try{
+    // se busca por el id y los cambios que se enviarion al body
     const { _id, ...updates } = req.body;
     const resultado = await Usuario.findOneAndUpdate({_id, isDeleted : false},updates ,{ new: true, runValidators: true});
     res.status(200).json(resultado);
