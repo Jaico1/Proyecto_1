@@ -5,7 +5,7 @@ const router = Router();
 // Endpoint GET /prueba
 router.get('/', getRestaurante );
 
-router.get('/2', getRestauranteCatNom );
+router.get('/nomcategoria', getRestauranteCatNom );
 
 // Endpoint POST /prueba
 router.post('/', createRestaurante );

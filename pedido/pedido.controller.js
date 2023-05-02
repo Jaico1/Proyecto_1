@@ -13,6 +13,16 @@ export async function getPedido(req,res) {
   }
 }
 
+export async function getPedidoNoAceptado(req,res) {
+  try{ 
+    // se envian los pedidos en estado enviado
+    const pedido = await Pedido.find({estado: "enviado", isDeleted:false});
+    res.status(200).json(pedido);
+  }catch(err){
+    res.status(500).json(err);
+  }
+}
+
 export async function getPedidoUserDate(req,res) {
   try{ 
     const { domiciliario, cliente, restaurante, fechaInicial, fechaFinal } = req.query;

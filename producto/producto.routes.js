@@ -6,7 +6,7 @@ const router = Router();
 // Endpoint GET /prueba
 router.get('/', getProducto ); 
 
-router.get('/2', getProductoRes ); 
+router.get('/restaurante', getProductoRes ); 
 
 // Endpoint POST /prueba
 router.post('/', createProducto );

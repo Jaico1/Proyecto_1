@@ -1,11 +1,13 @@
-import { createPedido, deletePedido, getPedido, getPedidoUserDate, patchPedido } from "./pedido.controller";
+import { createPedido, deletePedido, getPedido, getPedidoNoAceptado, getPedidoUserDate, patchPedido } from "./pedido.controller";
 import {Router} from 'express';
 const router = Router();
 
 // Endpoint GET /prueba
 router.get('/', getPedido );
 
-router.get('/2', getPedidoUserDate );
+router.get('/usuarios', getPedidoUserDate );
+
+router.get('/enviados', getPedidoNoAceptado );
 
 // Endpoint POST /prueba
 router.post('/', createPedido );
